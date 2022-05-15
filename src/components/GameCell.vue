@@ -1,14 +1,31 @@
 <template>
-    <div class="cell">
+    <td class="cell" 
+    @click="handleClick">
+    {{ convertedValue(value) }}
 
-        <span></span>
+        <!-- <input type="number" maxlength="1" /> -->
 
-    </div>
+    </td>
 </template>
 
 <script>
     export default {
-        name: 'GameCell'
+        name: 'GameCell',
+        props: {
+            cellIndex: Object,
+            value: String
+        },
+        setup(props, {emit}) {
+            const handleClick = () => {
+                emit('selectCell', props.cellIndex)
+            }
+
+            const convertedValue = str => str.replace('.', '')
+            return {
+                handleClick,
+                convertedValue
+            }
+        }
     }
 </script>
 
@@ -18,8 +35,14 @@
     height: 50px;
     border: none;
     outline: none;
-    border-top: 1px solid gray;
-    border-left: 1px solid gray;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+input {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
     cursor: pointer;
 }
 </style>
